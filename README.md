@@ -1,0 +1,1 @@
+- well i kinda GPT-ed this lmao but heres an initial thing like skeleton for us to work on but uhh aagay dekh lou idk ><
