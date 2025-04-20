@@ -22,7 +22,7 @@ int main() {
 
     float simulationTime = 0.0f;
     float deltaTime = 1.0f; // Time step for simulation (adjust as needed)
-    const float simulationDuration = 300.0f; // 5 minutes in seconds
+    const float simulationDuration = 10.0f; // 300.0f; // 5 minutes in seconds
 
     generateFlights(flights, airlines, simulationTime, runways);
 
