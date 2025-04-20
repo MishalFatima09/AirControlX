@@ -1,11 +1,10 @@
 #include "AirControlX.h"
 #include <iostream>
-#include <cstdlib> // For random number generation
-#include <ctime>   // For time functions
+#include <cstdlib> 
+#include <ctime>
 
 using namespace std;
 
-// 1. Airlines init
 void initializeAirlines( vector<Airline>& airlines) 
 {
 	// Name, airine Type, number of aircrafts, number of flights
@@ -17,7 +16,7 @@ void initializeAirlines( vector<Airline>& airlines)
     airlines.push_back({ "AghaKhan Air Ambulance", MEDICAL, 2, 1 });
 }
 
-// 3. Runways init
+
 void initializeRunways( vector<Runway>& runways) {
     runways.push_back({ "RWY-A", NORTH_SOUTH }); //arrivals
     runways.push_back({ "RWY-B", EAST_WEST }); //departures
@@ -29,7 +28,6 @@ float randomFloat(float min, float max) {
     return min + static_cast<float>(rand()) / (static_cast<float>(RAND_MAX / (max - min)));
 }
 
-// Function to get AircraftType from AirlineType
 AircraftType getAircraftTypeFromAirlineType(AirlineType airlineType) {
     switch (airlineType) {
     case CARGO:
@@ -69,11 +67,11 @@ void generateFlights( vector<Aircraft>& flights, const  vector<Airline>& airline
 				// Assign to RWY-A or RWY-B based on availability
 				if (!runways[0].isOccupied) {
 					newAircraft.assignedRunway = &runways[0]; // assign to RWY-A
-					runways[0].isOccupied = true; // mark as occupied
+					runways[0].isOccupied = true;
 				}
 				else if (!runways[1].isOccupied) {
 					newAircraft.assignedRunway = &runways[1]; // assign to RWY-B
-					runways[1].isOccupied = true; // mark as occupied
+					runways[1].isOccupied = true; 
 				}
 			}
 
@@ -117,11 +115,11 @@ void simulateFlightPhases(vector<Aircraft>& flights, float deltaTime, float simu
             }
             break;
         case TAKEOFF_ROLL:
-            aircraft.speed += 50.0f * deltaTime; // Example acceleration
+            aircraft.speed += 50.0f * deltaTime; //acceleration happening here
             if (aircraft.speed > 290.0f) {
-                aircraft.hasAVN = true; // Speed violation
+                aircraft.hasAVN = true; // speed limit has been violated and AVN activated
             }
-            if (simulationTime > 10.0f) { // Example: Climb after 10 seconds
+            if (simulationTime > 10.0f) { //Climb after 10 seconds
                 aircraft.phase = CLIMB;
                 aircraft.speed = randomFloat(250.0f, 463.0f);
             }
@@ -135,7 +133,7 @@ void simulateFlightPhases(vector<Aircraft>& flights, float deltaTime, float simu
         case CRUISE:
             if (simulationTime > 20.0f) {
                 aircraft.phase = APPROACH;
-                aircraft.speed = randomFloat(300.0f, 400.0f); // slowing down
+                aircraft.speed = randomFloat(300.0f, 400.0f);
             }
             break;
         case APPROACH:
@@ -146,7 +144,7 @@ void simulateFlightPhases(vector<Aircraft>& flights, float deltaTime, float simu
             break;
 
         case LANDING:
-            aircraft.speed -= 30.0f * deltaTime; // decelerate during landing
+            aircraft.speed -= 30.0f * deltaTime; // deceleration while landing
             if (aircraft.speed < 60.0f) {
                 aircraft.phase = TAXI; // back to taxi after touchdown
                 aircraft.speed = randomFloat(10.0f, 20.0f);
@@ -154,15 +152,13 @@ void simulateFlightPhases(vector<Aircraft>& flights, float deltaTime, float simu
             break;
 
         case HOLDING:
-            // holding pattern awaiting clearance
-            aircraft.speed = randomFloat(400.0f, 600.0f); // realistic holding pattern speed
+            aircraft.speed = randomFloat(400.0f, 600.0f);
             if (simulationTime > 23.0f) {
                 aircraft.phase = APPROACH;
-                aircraft.speed = randomFloat(240.0f, 290.0f); // slow down to approach speed
+                aircraft.speed = randomFloat(240.0f, 290.0f);
             }
             break;
         case DEPARTURE:
-            // Optional: You could make this a post-takeoff transition before CRUISE
             aircraft.speed = randomFloat(300.0f, 500.0f);
             if (simulationTime > 13.0f) {
                 aircraft.phase = CLIMB;

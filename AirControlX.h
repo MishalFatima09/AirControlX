@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <ctime> 
-#include <cstdlib> // srand
+#include <cstdlib>
 
 using namespace std;
 
@@ -14,7 +14,7 @@ class Aircraft;
 class Runway;
 class AVN;
 
-// 1. Airlines
+// Airlines
 enum AirlineType { COMMERCIAL, CARGO, MILITARY, MEDICAL }; //military and medical (MedEvac) are both in emergency
 
 struct Airline {
@@ -24,10 +24,10 @@ struct Airline {
 	int numFlights; // basically how many aircrafts are in the air
 };
 
-// 2. Aircraft Types
+// Aircraft Types
 enum AircraftType { COMMERCIAL_FLIGHT, CARGO_FLIGHT, EMERGENCY_FLIGHT };
 
-// 3. Runways
+// Runways
 enum RunwayAlignment { NORTH_SOUTH, EAST_WEST, FLEXIBLE };
 
 struct Runway {
@@ -38,7 +38,6 @@ struct Runway {
     Runway( string name, RunwayAlignment alignment) : name(name), alignment(alignment), isOccupied(false) {}
 };
 
-// 6. Flight Speed Monitoring
 enum FlightPhase { HOLDING, APPROACH, LANDING, TAXI, AT_GATE, TAKEOFF_ROLL, CLIMB, CRUISE, DEPARTURE };
 
 struct Aircraft {
@@ -57,9 +56,8 @@ struct Aircraft {
     }
 };
 
-// 7. Airspace Violation Notice (AVN)
 struct AVN {
-    int id; //AVN id
+    int id;
     Aircraft* aircraft;
     time_t issueTime;
     bool isActive;
@@ -69,12 +67,10 @@ struct AVN {
 void initializeAirlines( vector<Airline>& airlines);
 void initializeRunways( vector<Runway>& runways);
 void generateFlights( vector<Aircraft>& flights, const  vector<Airline>& airlines, float simulationTime, vector<Runway>& runways);
-//void simulateFlightPhases( vector<Aircraft>& flights, float deltaTime);
-
 void simulateFlightPhases(vector<Aircraft>& flights, float deltaTime, float simulationTime);
 
 void checkSpeedViolations( vector<Aircraft>& flights,  vector<AVN>& avns, int& avnCounter);
 void handleGroundFaults( vector<Aircraft>& flights);
 void displayFlightStatus(const  vector<Aircraft>& flights);
 
-#endif // AIRCONTROLX_H
+#endif
