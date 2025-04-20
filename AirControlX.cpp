@@ -154,13 +154,13 @@ void simulateFlightPhases(vector<Aircraft>& flights, float deltaTime, float simu
             break;
 
         case HOLDING:
-            // Aircraft is waiting for clearance to approach
-            aircraft.speed = 300.0f; // holding pattern speed
+            // holding pattern awaiting clearance
+            aircraft.speed = randomFloat(400.0f, 600.0f); // realistic holding pattern speed
             if (simulationTime > 23.0f) {
-                aircraft.phase = APPROACH; // allow to proceed after wait
+                aircraft.phase = APPROACH;
+                aircraft.speed = randomFloat(240.0f, 290.0f); // slow down to approach speed
             }
             break;
-
         case DEPARTURE:
             // Optional: You could make this a post-takeoff transition before CRUISE
             aircraft.speed = randomFloat(300.0f, 500.0f);
