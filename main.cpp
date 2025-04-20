@@ -27,7 +27,8 @@ int main() {
     generateFlights(flights, airlines, simulationTime, runways);
 
     while (simulationTime < simulationDuration) {
-        simulateFlightPhases(flights, deltaTime);
+        simulateFlightPhases(flights, deltaTime, simulationTime);
+
         checkSpeedViolations(flights, avns, avnCounter);
         handleGroundFaults(flights);
         displayFlightStatus(flights);
